@@ -87,31 +87,167 @@ public class Fighter {
         return stance;
     }
 
+    public void setStance(String stance) {
+        this.stance = stance;
+    }
+
     public String getFirst_name() {
         return firstName;
+    }
+
+    public void setFirst_name(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLast_name() {
+        return lastName;
+    }
+
+    public void setLast_name(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getHeight() {
         return height;
     }
 
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
     public String getWeight() {
         return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getReach() {
+        return reach;
+    }
+
+    public void setReach(String reach) {
+        this.reach = reach;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
     public int getWins() {
         return wins;
     }
 
-    public void setStance(String stance) {
-        this.stance = stance;
+    public void setWins(int wins) {
+        this.wins = wins;
     }
 
-    public void setHeight(String height) {
-        this.height = height;
+    public int getLosses() {
+        return losses;
     }
 
-    public void setWeight(Object weight) {
-        this.weight = (String) weight;
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
+    public int getDraws() {
+        return draws;
+    }
+
+    public void setDraws(int draws) {
+        this.draws = draws;
+    }
+
+    public String getBelt() {
+        return belt;
+    }
+
+    public void setBelt(String belt) {
+        this.belt = belt;
+    }
+
+    public float getSlpm() {
+        return slpm;
+    }
+
+    public void setSlpm(float slpm) {
+        this.slpm = slpm;
+    }
+
+    public String getStr_acc() {
+        return strAcc;
+    }
+
+    public void setStr_acc(String strAcc) {
+        this.strAcc = strAcc;
+    }
+
+    public float getSapm() {
+        return sapm;
+    }
+
+    public void setSapm(float sapm) {
+        this.sapm = sapm;
+    }
+
+    public String getStr_def() {
+        return strDef;
+    }
+
+    public void setStr_def(String strDef) {
+        this.strDef = strDef;
+    }
+
+    public float getTd_avg() {
+        return tdAvg;
+    }
+
+    public void setTd_avg(float tdAvg) {
+        this.tdAvg = tdAvg;
+    }
+
+    public String getTd_acc() {
+        return tdAcc;
+    }
+
+    public void setTd_acc(String tdAcc) {
+        this.tdAcc = tdAcc;
+    }
+
+    public String getTd_def() {
+        return tdDef;
+    }
+
+    public void setTd_def(String tdDef) {
+        this.tdDef = tdDef;
+    }
+
+    public float getSub_avg() {
+        return subAvg;
+    }
+
+    public void setSub_avg(float subAvg) {
+        this.subAvg = subAvg;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

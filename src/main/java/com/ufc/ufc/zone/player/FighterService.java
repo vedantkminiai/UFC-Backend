@@ -60,14 +60,8 @@ public class FighterService {
         Optional<Fighter> existingFighter = fighterRepository.findByFullName(updatedFighter.getFull_name());
 
         if (existingFighter.isPresent()){
-            Fighter fighterToUpdate = existingFighter.get();
-            fighterToUpdate.setFull_name(updatedFighter.getFull_name());
-            fighterToUpdate.setStance(updatedFighter.getStance());
-            fighterToUpdate.setHeight(updatedFighter.getHeight());
-            fighterToUpdate.setWeight(updatedFighter.getWeight());
-
-            fighterRepository.save(fighterToUpdate);
-            return fighterToUpdate;
+            fighterRepository.save(updatedFighter);
+            return updatedFighter;
         }
         return null;
 
