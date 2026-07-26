@@ -17,6 +17,18 @@ import FighterForm from './components/FighterForm'
 import FighterPanel from './components/FighterPanel'
 
 const read = (fighter, snake, camel = snake) => fighter[snake] ?? fighter[camel]
+const normalizeText = (value = '') => String(value).trim().toLowerCase()
+
+function uniqueOptions(fighters, field, defaultOption) {
+  const options = new Map()
+
+  fighters.forEach((fighter) => {
+    const value = String(fighter[field] || '').trim()
+    if (value) options.set(normalizeText(value), value)
+  })
+
+  return [defaultOption, ...options.values()]
+}
 
 function normalizeFighter(fighter) {
   return {
@@ -86,23 +98,30 @@ export default function App() {
   }, [])
 
   const stances = useMemo(
-    () => ['All stances', ...new Set(fighters.map((fighter) => fighter.stance).filter(Boolean))],
+    () => uniqueOptions(fighters, 'stance', 'All stances'),
     [fighters],
   )
   const weights = useMemo(
-    () => ['All weights', ...new Set(fighters.map((fighter) => fighter.weight).filter(Boolean))],
+    () => uniqueOptions(fighters, 'weight', 'All weights'),
     [fighters],
   )
 
   const visibleFighters = useMemo(() => {
-    const query = search.toLowerCase().trim()
+    const query = normalizeText(search)
+    const selectedStance = normalizeText(stance)
+    const selectedWeight = normalizeText(weight)
+
     return fighters.filter((fighter) => {
       const matchesSearch =
         !query ||
-        fighter.fullName.toLowerCase().includes(query) ||
-        fighter.nickname.toLowerCase().includes(query)
-      const matchesStance = stance === 'All stances' || fighter.stance === stance
-      const matchesWeight = weight === 'All weights' || fighter.weight === weight
+        normalizeText(fighter.fullName).startsWith(query)
+      const matchesStance =
+        stance === 'All stances' ||
+        normalizeText(fighter.stance) === selectedStance
+      const matchesWeight =
+        weight === 'All weights' ||
+        normalizeText(fighter.weight) === selectedWeight
+
       return matchesSearch && matchesStance && matchesWeight
     })
   }, [fighters, search, stance, weight])
@@ -264,7 +283,11 @@ export default function App() {
               {[1, 2, 3, 4, 5, 6].map((item) => <div className="fighter-card skeleton" key={item} />)}
             </div>
           ) : visibleFighters.length ? (
-            <div className="fighter-grid">
+            <div
+              className="fighter-grid fighter-grid--filtered"
+              key={`${search}-${stance}-${weight}`}
+              aria-live="polite"
+            >
               {visibleFighters.map((fighter, index) => (
                 <FighterCard
                   key={fighter.fullName}
