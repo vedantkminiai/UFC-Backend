@@ -15,6 +15,7 @@ import BrandMark from './components/BrandMark'
 import FighterCard from './components/FighterCard'
 import FighterForm from './components/FighterForm'
 import FighterPanel from './components/FighterPanel'
+import StatLeaders from './components/StatLeaders'
 
 const read = (fighter, snake, camel = snake) => fighter[snake] ?? fighter[camel]
 const normalizeText = (value = '') => String(value).trim().toLowerCase()
@@ -57,6 +58,9 @@ function normalizeFighter(fighter) {
 }
 
 export default function App() {
+  const [page, setPage] = useState(() =>
+    window.location.hash === '#leaders' ? 'leaders' : 'roster',
+  )
   const [fighters, setFighters] = useState([])
   const [search, setSearch] = useState('')
   const [stance, setStance] = useState('All stances')
@@ -140,6 +144,22 @@ export default function App() {
     setFormOpen(true)
   }
 
+  function showRoster(section = 'roster') {
+    setPage('roster')
+    setMenuOpen(false)
+    window.history.replaceState(null, '', `#${section}`)
+    window.setTimeout(() => {
+      document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' })
+    }, 0)
+  }
+
+  function showLeaders() {
+    setPage('leaders')
+    setMenuOpen(false)
+    window.history.replaceState(null, '', '#leaders')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   function openEdit(fighter) {
     setSelected(null)
     setEditing(fighter)
@@ -180,9 +200,14 @@ export default function App() {
       <header className="site-header">
         <BrandMark />
         <nav className={menuOpen ? 'nav-links nav-links--open' : 'nav-links'}>
-          <a className="active" href="#roster">Roster</a>
-          <a href="#insights">Insights</a>
-          <a href="#about">About</a>
+          <button className={page === 'roster' ? 'active' : ''} onClick={() => showRoster('roster')}>
+            Roster
+          </button>
+          <button className={page === 'leaders' ? 'active' : ''} onClick={showLeaders}>
+            Leaders
+          </button>
+          <button onClick={() => showRoster('insights')}>Insights</button>
+          <button onClick={() => showRoster('about')}>About</button>
         </nav>
         <button className="button button--red header-cta" onClick={openCreate}>
           <Plus size={17} /> Add fighter
@@ -192,6 +217,9 @@ export default function App() {
         </button>
       </header>
 
+      {page === 'leaders' ? (
+        <StatLeaders fighters={fighters} loading={loading} onSelect={setSelected} />
+      ) : (
       <main>
         <section className="hero" id="about">
           <div className="hero__texture" />
@@ -307,6 +335,7 @@ export default function App() {
           )}
         </section>
       </main>
+      )}
 
       <footer>
         <BrandMark />
